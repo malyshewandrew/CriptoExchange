@@ -5,11 +5,15 @@ final class CriptoTableViewCell: UITableViewCell {
     
     // MARK: - PRIVATE PROPRTIES:
     private let containerView = UIView()
+    private let nameCoin = UILabel()
+    private let valueCoin = UILabel()
     
     // MARK: - ADD SUBVIEWS:
     
     private func addSubviews() {
         contentView.addSubview(containerView)
+        contentView.addSubview(nameCoin)
+        contentView.addSubview(valueCoin)
     }
     
     // MARK: - CONFIGURE CONSTRAINTS:
@@ -21,6 +25,20 @@ final class CriptoTableViewCell: UITableViewCell {
         containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
         containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
         containerView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        nameCoin.translatesAutoresizingMaskIntoConstraints = false
+        nameCoin.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        nameCoin.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15).isActive = true
+        nameCoin.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 0.5).isActive = true
+        nameCoin.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.5).isActive = true
+        nameCoin.text = "Dollar"
+        
+        valueCoin.translatesAutoresizingMaskIntoConstraints = false
+        valueCoin.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        valueCoin.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
+        valueCoin.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 0.5).isActive = true
+        valueCoin.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.5).isActive = true
+        valueCoin.text = "$143.4"
     }
     
     // MARK: - CONFIGURE UI:
@@ -30,6 +48,11 @@ final class CriptoTableViewCell: UITableViewCell {
         containerView.backgroundColor = UIColor(red: 37/255, green: 35/255, blue: 51/255, alpha: 1.0)
         containerView.layer.cornerRadius = 10
         selectionStyle = .none
+        
+        nameCoin.textColor = .white
+        nameCoin.font = .systemFont(ofSize: 20, weight: .medium, width: .standard)
+        valueCoin.textColor = .gray
+        valueCoin.textAlignment = .right
     }
     
     // MARK: LIFECYCLE:
