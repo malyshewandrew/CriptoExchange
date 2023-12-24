@@ -25,8 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // MARK: - TAB BAR ITEMS:
 
         let cripto = ViewController()
-        cripto.title = "CRIPTO"
-        cripto.tabBarItem.image = UIImage(systemName: "magnifyingglass")
+        cripto.title = "Exchange Rates"
 
         // MARK: - NAVIGATION BAR ITEMS:
 
