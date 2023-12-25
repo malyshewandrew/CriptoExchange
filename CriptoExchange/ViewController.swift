@@ -50,6 +50,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CriptoTableViewCell", for: indexPath) as? CriptoTableViewCell else { return UITableViewCell() }
+
+        let nm = NetworkManager.instance.getAssets { coin in
+            cell.configure(coin[indexPath.row])
+        }
         return cell
     }
     

@@ -31,14 +31,12 @@ final class CriptoTableViewCell: UITableViewCell {
         nameCoin.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15).isActive = true
         nameCoin.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 0.5).isActive = true
         nameCoin.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.5).isActive = true
-        nameCoin.text = "Dollar"
         
         valueCoin.translatesAutoresizingMaskIntoConstraints = false
         valueCoin.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
         valueCoin.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
         valueCoin.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 0.5).isActive = true
         valueCoin.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.5).isActive = true
-        valueCoin.text = "$143.4"
     }
     
     // MARK: - CONFIGURE UI:
@@ -53,6 +51,11 @@ final class CriptoTableViewCell: UITableViewCell {
         nameCoin.font = .systemFont(ofSize: 20, weight: .medium, width: .standard)
         valueCoin.textColor = .gray
         valueCoin.textAlignment = .right
+    }
+    
+    func configure(_ coin: ModelCoin) {
+        nameCoin.text = coin.name
+        valueCoin.text = String(coin.volume_1day_usd)
     }
     
     // MARK: LIFECYCLE:
