@@ -2,6 +2,8 @@ import Foundation
 import Alamofire
 
 final class NetworkManager {
+    
+    // MARK: - SINGLETON NETWORK MANAGER:
     static let instance = NetworkManager()
     
     private init() {}
@@ -15,12 +17,14 @@ final class NetworkManager {
         static let exchanges = "/exchanges"
     }
     
+    // MARK: - API KEY:
+    
     let header: HTTPHeaders = [
         "X-CoinAPI-Key": "BECA3812-AEA8-4843-83DA-8744B841C198",
         "Accept": "application/json"
     ]
     
-    
+    // MARK: - NETWORK REQUEST:
     
     func getAssets(completion: @escaping(Result<[ModelCoin], RequestError>) -> Void) {
         AF.request(Constanse.coinBaseURL + CoinEndPoint.assets, headers: header).responseDecodable(of: [ModelCoin].self) { response in
@@ -32,5 +36,4 @@ final class NetworkManager {
             }
         }
     }
-    
 }
