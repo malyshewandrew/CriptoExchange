@@ -4,11 +4,37 @@ final class ViewController: UIViewController {
 
     // MARK: - PRIVATE PROPRTIES:
     private let tableView = UITableView()
+    var coin: [ModelCoin] = []
     
     // MARK: - ADD SUBVIEWS:
     
     private func addSubviews() {
         view.addSubview(tableView)
+    }
+    
+    // MARK: - NETWORK REQUEST:
+    private func requestJSON() {
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        NetworkManager.instance.getAssets { result in
+            activityIndicator.stopAnimating()
+            activityIndicator.removeFromSuperview()
+            switch result {
+            case .success(let coin):
+                DispatchQueue.main.async {
+                    self.coin = coin
+                    self.tableView.reloadData()
+                }
+            case .failure:
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Error", message: "Error Request", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+            }
+        }
     }
     
     // MARK: - CONFIGURE CONSTRAINTS:
@@ -30,7 +56,7 @@ final class ViewController: UIViewController {
     }
     
     
-    // MARK: LIFECYCLE:
+    // MARK: - LIFECYCLE:
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -40,20 +66,23 @@ final class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(CriptoTableViewCell.self, forCellReuseIdentifier: "CriptoTableViewCell")
+        requestJSON()
     }
 }
 
+// MARK: - EXTENSION:
+
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        coin.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CriptoTableViewCell", for: indexPath) as? CriptoTableViewCell else { return UITableViewCell() }
-
-        let nm = NetworkManager.instance.getAssets { coin in
-            cell.configure(coin[indexPath.row])
-        }
+        
+        let tmpCoin = coin[indexPath.row]
+        cell.configure(tmpCoin)
+        
         return cell
     }
     

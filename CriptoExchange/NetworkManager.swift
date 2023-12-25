@@ -22,13 +22,13 @@ final class NetworkManager {
     
     
     
-    func getAssets(completion: @escaping(([ModelCoin]) -> Void)) {
+    func getAssets(completion: @escaping(Result<[ModelCoin], RequestError>) -> Void) {
         AF.request(Constanse.coinBaseURL + CoinEndPoint.assets, headers: header).responseDecodable(of: [ModelCoin].self) { response in
             switch response.result {
             case .success(let coin):
-                completion(.)
-            case .failure(let failure):
-                print("failure")
+                completion(.success(coin))
+            case .failure:
+                completion(.failure(.ErrorRequest))
             }
         }
     }
