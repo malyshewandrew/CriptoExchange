@@ -1,4 +1,11 @@
 struct ModelCoin: Codable {
     let name: String
-    let volume_1day_usd: Double
+    let volumeOneDayUsd: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case volumeOneDayUsd = "volume_1day_usd"
+    }
+    
 }
+
